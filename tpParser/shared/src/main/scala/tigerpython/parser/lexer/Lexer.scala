@@ -369,10 +369,11 @@ class Lexer(val source: CharSequence,
             hasError = hasError || result != TokenType.STR
             result = TokenType.UNICODE
           case 'r' | 'R' =>
+          case 'f' | 'F' =>
           case _ =>
             hasError = true
         }
-      hasError = hasError || (prefixLen > 1 && result == TokenType.STR)
+      hasError = hasError || (prefixLen > 2 && result == TokenType.STR)
       if (hasError)
         parserState.reportError(scanner.pos, ErrorCode.INVALID_STRING_PREFIX,
           scanner.peekString(0, prefixLen))
